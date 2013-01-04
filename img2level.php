@@ -2,6 +2,7 @@
 <?php
 
 $options['file'] = "img.png";
+$options['config'] = "config.php";
 
 $commands = array(
     'f' => 'file',
@@ -54,6 +55,7 @@ if (@$options['help']){
     exit;
 }
 
+include $options['config'];
 $file = $options['file'];
 
 $size = getimagesize($file);
@@ -73,14 +75,21 @@ switch(array_pop(explode('.', $file))){
         break;
 }
 
-$level = array();
+$level = array('data' => array(), 'objects' => array());
 
 for ($i=0; $i <$width; $i++){ 
     for ($j=0; $j<$height; $j++){
         $rgb = imagecolorat($im, $i, $j);
-        $level[$j][$i] = (int)!(bool) $rgb;
+        $value = sprintf('%06s', dechex($rgb));
+        $level['data'][$j][$i] = $config['colors'][$value]['value'];
+        if (isset($config['colors'][$value]['object'])){
+            $object = $config['colors'][$value]['object'];
+            $object['x'] = $i;
+            $object['y'] = $j;
+            $level['objects'][] = $object;
+        }
         //$color = imagecolorsforindex($im, $rgb);
     }
 }
 
-print "\n".str_replace('],', "],\n", json_encode($level))."\n";
+print "\n".str_replace(array('],', '},'), array("],\n", "},\n"), json_encode($level))."\n";

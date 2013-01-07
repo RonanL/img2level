@@ -42,15 +42,15 @@ It can optionnaly contain a *'object'* element, which is an array which will be 
 
 ### Example config file
 
-> &lt;?php  
-> $config = array(  
->   'colors' => array(  
->     'ffffff' => array('value' => 0),  
->     '000000' => array('value' => 1),  
->     '00ff00' => array('value' => 2),  
->     'ff0000' => array('value' => 0, 'object' => array('type' => 'monster')),  
->   ),  
-> );
+    &lt;?php  
+    $config = array(  
+      'colors' => array(  
+        'ffffff' => array('value' => 0),  
+        '000000' => array('value' => 1),  
+        '00ff00' => array('value' => 2),  
+        'ff0000' => array('value' => 0, 'object' => array('type' => 'monster')),  
+      ),  
+    );
 
 With this file, 4 colors will be used:  
 - white *ffffff* for empty space
@@ -66,19 +66,20 @@ This file, used with the following image:
 ![Example level image](examples/example.png)
 
 will produce the following result (indentation, line breaks added for lisibility):  
-> {  
->   "data":[  
->     [1,1,1,1,1,1,1,1],  
->     [1,0,0,0,0,0,0,1],  
->     [1,0,0,0,1,0,0,1],  
->     [1,0,0,0,0,0,0,1],  
->     [1,0,0,2,0,0,0,1],  
->     [1,0,0,1,1,0,0,1],  
->     [1,0,0,1,1,0,2,1],  
->     [1,1,1,1,1,1,1,1]  
->   ],  
->   "objects":[  
->     {"type":"monster","x":3,"y":4},  
->     {"type":"monster","x":6,"y":6}  
->   ]  
-> }  
+    {  
+      "data":[  
+        [1,1,1,1,1,1,1,1],  
+        [1,0,0,0,0,0,0,1],  
+        [1,0,0,0,1,0,0,1],  
+        [1,0,0,0,0,0,0,1],  
+        [1,0,0,2,0,0,0,1],  
+        [1,0,0,1,1,0,0,1],  
+        [1,0,0,1,1,0,2,1],  
+        [1,1,1,1,1,1,1,1]  
+      ],  
+      "objects":[  
+        {"type":"monster","x":3,"y":4},  
+        {"type":"monster","x":6,"y":6}  
+      ]  
+    }  
+

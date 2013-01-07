@@ -63,7 +63,7 @@ The resulting json will be an associative array containing two elements:
 - the *'objects'* element will contain, for each red pixel in the image, an array containing three values: *'monster'* in *'type'*, and the coordinates of the pixel in *'x'* and *'y'*
 
 This file, used with the following image:  
-![Example level image](examples/example.png)
+![Example level image](http://ronanl.github.com/img2level/examples/example.png)
 
 will produce the following result (indentation, line breaks added for lisibility): 
 

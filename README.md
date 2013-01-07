@@ -42,7 +42,7 @@ It can optionnaly contain a *'object'* element, which is an array which will be 
 
 ### Example config file
 
-    &lt;?php  
+    <?php  
     $config = array(  
       'colors' => array(  
         'ffffff' => array('value' => 0),  
@@ -65,7 +65,8 @@ The resulting json will be an associative array containing two elements:
 This file, used with the following image:  
 ![Example level image](examples/example.png)
 
-will produce the following result (indentation, line breaks added for lisibility):  
+will produce the following result (indentation, line breaks added for lisibility): 
+
     {  
       "data":[  
         [1,1,1,1,1,1,1,1],  

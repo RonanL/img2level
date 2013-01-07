@@ -1,0 +1,138 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Img2level by RonanL</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/RonanL/img2level">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/RonanL/img2level/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/RonanL/img2level/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
+
+    <div class="wrapper">
+
+      <section>
+        <div id="title">
+          <h1>Img2level</h1>
+          <p>img2level is a simple php script for converting an image into a json game level, letting you use your favorite image editor as a level editor.</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/RonanL">RonanL</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></span>
+        </div>
+
+        <h1>img2level</h1>
+
+<p>img2level is a simple command line php script for converting an image into a json game level, letting you use your favorite image editor as a level editor.</p>
+
+<h2>Available options</h2>
+
+<blockquote>
+<p>-f &lt;file&gt;, --file=&lt;file&gt;<br>
+    Specifies the source file to convert. Ignored if -d or --dir is used.</p>
+
+<p>-d &lt;directory&gt;, --dir=&lt;directory&gt;<br>
+    Converts all the files in the specified directory into an array of levels</p>
+
+<p>-h, --help<br>
+    Displays this message</p>
+
+<p>-t &lt;file,directory&gt;, --target=&lt;file,directory&gt; //TODO<br>
+    Write the result in the target file or directory.<br>
+    If the target is a directory, a file will be created for each source image.</p>
+
+<p>-c &lt;file&gt;, --config=&lt;file&gt;<br>
+    Specifies the config file to use</p>
+</blockquote>
+
+<h2>Exemple usage</h2>
+
+<blockquote>
+<p><em>php img2level.php -f img.png</em><br>
+Will parse the <em>img.png</em> file and display the json result.</p>
+
+<p><em>php img2level.php -d images -c mygame.config.php &gt; mygame.json</em><br>
+This command will parse every image file in the <em>images</em> folder and write the result in the <em>mygame.json</em> file.
+The configuration from <em>mygame.config.php</em> will be used</p>
+</blockquote>
+
+<h2>Configuration file</h2>
+
+<p>img2level comes with an exemple configuration file named config.php<br>
+The config file initializes and populates a php associative array named $config.<br>
+The $config array must contain a <em>'colors'</em> element, itself an array describing how img2level must behave when encountering a color.<br>
+Each key of the $config['colors'] array is the value of the color. For full color images (such as png-24), it must be a six characters RGB hexadecimal value. For indexed color images (such ad gif), it must be the index value of the color.<br>
+Each element must be an associative array with at least a <em>'value'</em> element. This is the value which will be put in the <em>'data'</em> array of the json.<br>
+It can optionnaly contain a <em>'object'</em> element, which is an array which will be copied in the <em>'objects'</em> value of the result, along with the coordinates of the objects.</p>
+
+<h3>Example config file</h3>
+
+<pre><code>&lt;?php  
+$config = array(  
+  'colors' =&gt; array(  
+    'ffffff' =&gt; array('value' =&gt; 0),  
+    '000000' =&gt; array('value' =&gt; 1),  
+    '00ff00' =&gt; array('value' =&gt; 2),  
+    'ff0000' =&gt; array('value' =&gt; 0, 'object' =&gt; array('type' =&gt; 'monster')),  
+  ),  
+);
+</code></pre>
+
+<p>With this file, 4 colors will be used:  </p>
+
+<ul>
+<li>white <em>ffffff</em> for empty space</li>
+<li>black <em>000000</em> for walls</li>
+<li>green <em>00ff00</em> for the player starting position</li>
+<li>red <em>ff0000</em> for monsters</li>
+</ul><p>The resulting json will be an associative array containing two elements:  </p>
+
+<ul>
+<li>the <em>'data'</em> element will be a two dimensionnal array of equal width and height as the image, containing for each cell the value defined in the <em>'colors'</em> array</li>
+<li>the <em>'objects'</em> element will contain, for each red pixel in the image, an array containing three values: <em>'monster'</em> in <em>'type'</em>, and the coordinates of the pixel in <em>'x'</em> and <em>'y'</em>
+</li>
+</ul><p>This file, used with the following image:<br><img src="examples/example.png" alt="Example level image"></p>
+
+<p>will produce the following result (indentation, line breaks added for lisibility): </p>
+
+<pre><code>{  
+  "data":[  
+    [1,1,1,1,1,1,1,1],  
+    [1,0,0,0,0,0,0,1],  
+    [1,0,0,0,1,0,0,1],  
+    [1,0,0,0,0,0,0,1],  
+    [1,0,0,2,0,0,0,1],  
+    [1,0,0,1,1,0,0,1],  
+    [1,0,0,1,1,0,2,1],  
+    [1,1,1,1,1,1,1,1]  
+  ],  
+  "objects":[  
+    {"type":"monster","x":3,"y":4},  
+    {"type":"monster","x":6,"y":6}  
+  ]  
+}  
+</code></pre>
+      </section>
+
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>

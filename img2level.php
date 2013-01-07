@@ -36,9 +36,9 @@ foreach ($argv as $key => $arg){
 if (@$options['help']){
     print "Available options:
 -f <file>, --file=<file> 
-    Specifies the source file to convert
+    Specifies the source file to convert. Ignored if -d or --dir is used.
 
--d <directory>, --dir=<directory> //TODO
+-d <directory>, --dir=<directory>
     Converts all the files in the specified directory
 
 -h, --help
@@ -48,7 +48,7 @@ if (@$options['help']){
     Write the result in the target file or directory.
     If the target is a directory, a file will be created for each source image.
 
--c <file>, --config=<file> //TODO
+-c <file>, --config=<file>
     Specifies the config file to use
 
 ";
@@ -56,40 +56,57 @@ if (@$options['help']){
 }
 
 include $options['config'];
-$file = $options['file'];
 
-$size = getimagesize($file);
-$width = $size[0];
-$height = $size[1];
+$directory = $options['dir'];
 
-switch(array_pop(explode('.', $file))){
-    case 'png':
-        $im = imagecreatefrompng($file);
-        break;
-    case 'gif':
-        $im = imagecreatefromgif($file);
-        break;
-    case 'jpg':
-    case 'jpeg':
-        $im = imagecreatefromjpg($file);
-        break;
-}
-
-$level = array('data' => array(), 'objects' => array());
-
-for ($i=0; $i <$width; $i++){ 
-    for ($j=0; $j<$height; $j++){
-        $rgb = imagecolorat($im, $i, $j);
-        $value = sprintf('%06s', dechex($rgb));
-        $level['data'][$j][$i] = $config['colors'][$value]['value'];
-        if (isset($config['colors'][$value]['object'])){
-            $object = $config['colors'][$value]['object'];
-            $object['x'] = $i;
-            $object['y'] = $j;
-            $level['objects'][] = $object;
+if ($options['dir']){
+    $result = array();
+    $files = scandir($directory);
+    foreach($files as $file){
+        if (!is_dir($file) && in_array(strtolower(array_pop(explode('.', $file))), array('png', 'gif'))){
+            $result[] = img2array($file);
         }
-        //$color = imagecolorsforindex($im, $rgb);
     }
 }
+else{
+    $file = $options['file'];
+    $result = img2array($file);
+}
 
-print "\n".str_replace(array('],', '},'), array("],\n", "},\n"), json_encode($level))."\n";
+print "\n".str_replace(array('],', '},'), array("],\n", "},\n"), json_encode($result))."\n";
+
+function img2array($file){
+    global $config;
+    $size = getimagesize($file);
+    $width = $size[0];
+    $height = $size[1];
+
+    switch(array_pop(explode('.', $file))){
+        case 'png':
+            $im = imagecreatefrompng($file);
+            break;
+        case 'gif':
+            $im = imagecreatefromgif($file);
+            break;
+    }
+
+    $level = array('data' => array(), 'objects' => array());
+
+    for ($i=0; $i <$width; $i++){ 
+        for ($j=0; $j<$height; $j++){
+            $color = imagecolorat($im, $i, $j);
+            if (imageistruecolor($im)){
+                $color = sprintf('%06s', dechex($color));
+            }
+            
+            $level['data'][$j][$i] = $config['colors'][$color]['value'] ? $config['colors'][$color]['value'] : 0;
+            if (isset($config['colors'][$color]['object'])){
+                $object = $config['colors'][$color]['object'];
+                $object['x'] = $i;
+                $object['y'] = $j;
+                $level['objects'][] = $object;
+            }
+        }
+    }
+    return $level;
+}

@@ -1,43 +1,36 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
+
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Img2level by RonanL</title>
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script src="javascripts/respond.js"></script>
-    <!--[if lt IE 9]>
-      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <!--[if lt IE 8]>
-    <link rel="stylesheet" href="stylesheets/ie.css">
-    <![endif]-->
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Img2level : img2level is a simple php script for converting an image into a json game level, letting you use your favorite image editor as a level editor." />
 
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Img2level</title>
   </head>
+
   <body>
-      <div id="header">
-        <nav>
-          <li class="fork"><a href="https://github.com/RonanL/img2level">View On GitHub</a></li>
-          <li class="downloads"><a href="https://github.com/RonanL/img2level/zipball/master">ZIP</a></li>
-          <li class="downloads"><a href="https://github.com/RonanL/img2level/tarball/master">TAR</a></li>
-          <li class="title">DOWNLOADS</li>
-        </nav>
-      </div><!-- end header -->
 
-    <div class="wrapper">
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/RonanL/img2level">View on GitHub</a>
 
-      <section>
-        <div id="title">
-          <h1>Img2level</h1>
-          <p>img2level is a simple php script for converting an image into a json game level, letting you use your favorite image editor as a level editor.</p>
-          <hr>
-          <span class="credits left">Project maintained by <a href="https://github.com/RonanL">RonanL</a></span>
-          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></span>
-        </div>
+          <h1 id="project_title">Img2level</h1>
+          <h2 id="project_tagline">img2level is a simple php script for converting an image into a json game level, letting you use your favorite image editor as a level editor.</h2>
 
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/RonanL/img2level/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/RonanL/img2level/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
         <h1>img2level</h1>
 
 <p>img2level is a simple command line php script for converting an image into a json game level, letting you use your favorite image editor as a level editor.</p>
@@ -108,7 +101,7 @@ $config = array(
 <li>the <em>'data'</em> element will be a two dimensionnal array of equal width and height as the image, containing for each cell the value defined in the <em>'colors'</em> array</li>
 <li>the <em>'objects'</em> element will contain, for each red pixel in the image, an array containing three values: <em>'monster'</em> in <em>'type'</em>, and the coordinates of the pixel in <em>'x'</em> and <em>'y'</em>
 </li>
-</ul><p>This file, used with the following image:<br><img src="examples/example.png" alt="Example level image"></p>
+</ul><p>This file, used with the following image:<br><img src="http://ronanl.github.com/img2level/examples/example.png" alt="Example level image"></p>
 
 <p>will produce the following result (indentation, line breaks added for lisibility): </p>
 
@@ -130,9 +123,17 @@ $config = array(
 }  
 </code></pre>
       </section>
-
     </div>
-    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Img2level maintained by <a href="https://github.com/RonanL">RonanL</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
     
+
   </body>
 </html>

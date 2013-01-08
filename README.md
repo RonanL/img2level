@@ -87,7 +87,7 @@ will produce the following result (indentation, line breaks added for lisibility
 ### Another example
 
 #### Source image
-![SMB example level image](http://ronanl.github.com/img2level/images/smb2.png)
+![SMB example level image](http://ronanl.github.com/img2level/examples/smb2.png)
 
 #### Config file
 
